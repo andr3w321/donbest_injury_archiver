@@ -1,0 +1,9 @@
+# at minute 5 every 8 hours
+5 */8 * * * /home/johndoe/scripts/scrape_donbest_injuries.py --league nfl --data-dir /home/johndoe/backup/injury_data/
+10 */8 * * * /home/johndoe/scripts/scrape_donbest_injuries.py --league ncf --data-dir /home/johndoe/backup/injury_data/
+15 */8 * * * /home/johndoe/scripts/scrape_donbest_injuries.py --league wnba --data-dir /home/johndoe/backup/injury_data/
+20 */8 * * * /home/johndoe/scripts/scrape_donbest_injuries.py --league nba --data-dir /home/johndoe/backup/injury_data/
+25 */8 * * * /home/johndoe/scripts/scrape_donbest_injuries.py --league mlb --data-dir /home/johndoe/backup/injury_data/
+30 */8 * * * /home/johndoe/scripts/scrape_donbest_injuries.py --league nhl --data-dir /home/johndoe/backup/injury_data/
+35 */8 * * * /home/johndoe/scripts/scrape_donbest_injuries.py --league ncb --data-dir /home/johndoe/backup/injury_data/
+40 */8 * * * /home/johndoe/scripts/scrape_donbest_injuries.py --league cfl --data-dir /home/johndoe/backup/injury_data/
