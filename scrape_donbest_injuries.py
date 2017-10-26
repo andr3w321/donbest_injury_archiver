@@ -34,16 +34,10 @@ def upsert_injury(current_injuries, injury):
         current_injuries[i].player_name == injury["Player"] and \
         current_injuries[i].position == injury["Pos"] and \
         current_injuries[i].injury == injury["Injury"] and \
-        current_injuries[i].is_red == injury["is_red"]:
-            # if a true match, remove injury from current injuries
-            if current_injuries[i].status == injury["Status"]:
-                db_match = True
-                del remaining_current_injuries[i]
-            else:
-                # check to make sure we're not removing an injury before it was created while importing old injury files
-                if injury["created_at"] > current_injuries[i].created_at:
-                    # if only a status update, add a removed_at time to the db_injury and then create a new injury later
-                    current_injuries[i].removed_at = injury["created_at"]
+        current_injuries[i].is_red == injury["is_red"] and \
+        current_injuries[i].status == injury["Status"]:
+            db_match = True
+            del remaining_current_injuries[i]
 
     if db_match is False:
         db_donbest = Donbest()
@@ -57,15 +51,6 @@ def upsert_injury(current_injuries, injury):
         db_donbest.is_red = injury["is_red"]
         db_donbest.status = injury["Status"]
         session.add(db_donbest)
-        """
-        # this is slow, commiting after every add, we'll try removing duplicate donbest injuries elsewhere
-        try:
-            session.add(db_donbest)
-            session.commit()
-        except exc.SQLAlchemyError:
-            session.rollback()
-            print("Error adding probable donbest duplicate", injury)
-        """
     return remaining_current_injuries
         
 def retry_request(url):
@@ -131,7 +116,6 @@ def scrape_donbest_injuries(league, data_dir, save_html, save_db, old_html_filen
         else:
             trs = tables[0].find_all("tr")
 
-            count = 1
             donbest_injuries = []
             for tr in trs:
                 # donbest labels
@@ -161,7 +145,6 @@ def scrape_donbest_injuries(league, data_dir, save_html, save_db, old_html_filen
                                     injury["is_red"] = 1
                                 else:
                                     injury["is_red"] = 0
-                        count += 1
                         donbest_injuries.append(injury)
 
             # remove duplicate donbest injuries
@@ -169,7 +152,6 @@ def scrape_donbest_injuries(league, data_dir, save_html, save_db, old_html_filen
             # upsert
             for injury in donbest_injuries:
                 current_injuries = upsert_injury(current_injuries, injury)
-            print("remaining", str(len(current_injuries)))
             # remove all left over injuries
             for cur_inj in current_injuries:
                 # make sure we're not removing injuries before they were created when importing old html files
