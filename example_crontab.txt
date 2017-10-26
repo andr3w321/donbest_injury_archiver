@@ -1,9 +1,12 @@
 # at minute 5 every 8 hours
-5 */8 * * * /home/johndoe/scripts/scrape_donbest_injuries.py --league nfl --data-dir /home/johndoe/backup/injury_data/
-10 */8 * * * /home/johndoe/scripts/scrape_donbest_injuries.py --league ncf --data-dir /home/johndoe/backup/injury_data/
-15 */8 * * * /home/johndoe/scripts/scrape_donbest_injuries.py --league wnba --data-dir /home/johndoe/backup/injury_data/
-20 */8 * * * /home/johndoe/scripts/scrape_donbest_injuries.py --league nba --data-dir /home/johndoe/backup/injury_data/
-25 */8 * * * /home/johndoe/scripts/scrape_donbest_injuries.py --league mlb --data-dir /home/johndoe/backup/injury_data/
-30 */8 * * * /home/johndoe/scripts/scrape_donbest_injuries.py --league nhl --data-dir /home/johndoe/backup/injury_data/
-35 */8 * * * /home/johndoe/scripts/scrape_donbest_injuries.py --league ncb --data-dir /home/johndoe/backup/injury_data/
-40 */8 * * * /home/johndoe/scripts/scrape_donbest_injuries.py --league cfl --data-dir /home/johndoe/backup/injury_data/
+5 */8 * * * /home/janedoe/scripts/donbest_injury_archiver/venv_donbest_injury/bin/python /home/janedoe/scripts/donbest_injury_archiver/scrape_donbest_injuries.py --league nfl --data-dir /home/janedoe/backup/injury_data/ --save-html
+10 */8 * * * /home/janedoe/scripts/donbest_injury_archiver/venv_donbest_injury/bin/python /home/janedoe/scripts/donbest_injury_archiver/scrape_donbest_injuries.py --league ncf --data-dir /home/janedoe/backup/injury_data/ --save-html
+15 */8 * * * /home/janedoe/scripts/donbest_injury_archiver/venv_donbest_injury/bin/python /home/janedoe/scripts/donbest_injury_archiver/scrape_donbest_injuries.py --league wnba --data-dir /home/janedoe/backup/injury_data/ --save-html
+20 */8 * * * /home/janedoe/scripts/donbest_injury_archiver/venv_donbest_injury/bin/python /home/janedoe/scripts/donbest_injury_archiver/scrape_donbest_injuries.py --league nba --data-dir /home/janedoe/backup/injury_data/ --save-html
+35 */8 * * * /home/janedoe/scripts/donbest_injury_archiver/venv_donbest_injury/bin/python /home/janedoe/scripts/donbest_injury_archiver/scrape_donbest_injuries.py --league ncb --data-dir /home/janedoe/backup/injury_data/ --save-html
+25 */8 * * * /home/janedoe/scripts/donbest_injury_archiver/venv_donbest_injury/bin/python /home/janedoe/scripts/donbest_injury_archiver/scrape_donbest_injuries.py --league mlb --data-dir /home/janedoe/backup/injury_data/ --save-html
+30 */8 * * * /home/janedoe/scripts/donbest_injury_archiver/venv_donbest_injury/bin/python /home/janedoe/scripts/donbest_injury_archiver/scrape_donbest_injuries.py --league nhl --data-dir /home/janedoe/backup/injury_data/ --save-html
+40 */8 * * * /home/janedoe/scripts/donbest_injury_archiver/venv_donbest_injury/bin/python /home/janedoe/scripts/donbest_injury_archiver/scrape_donbest_injuries.py --league cfl --data-dir /home/janedoe/backup/injury_data/ --save-html
+
+# every 10 mins
+*/10 * * * * /home/janedoe/scripts/donbest_injury_archiver/update-donbest-injuries.sh >> /home/janedoe/log/donbest.log 2>&1

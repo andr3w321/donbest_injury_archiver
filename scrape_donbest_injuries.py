@@ -50,7 +50,20 @@ def upsert_injury(current_injuries, injury):
         db_donbest.injury = injury["Injury"]
         db_donbest.is_red = injury["is_red"]
         db_donbest.status = injury["Status"]
-        session.add(db_donbest)
+
+        # search for duplicates
+        duplicates = session.query(Donbest).filter_by(league = db_donbest.league, \
+                                                    date = db_donbest.date, \
+                                                    team_name = db_donbest.team_name, \
+                                                    player_name = db_donbest.player_name, \
+                                                    position = db_donbest.position, \
+                                                    injury = db_donbest.injury, \
+                                                    is_red = db_donbest.is_red, \
+                                                    status = db_donbest.status).all()
+        if len(duplicates) > 0:
+            print("ERROR: duplicate found for", db_donbest.league, db_donbest.date, db_donbest.team_name, db_donbest.player_name, db_donbest.position, db_donbest.injury, db_donbest.is_red, db_donbest.status, db_donbest.created_at)
+        else:
+            session.add(db_donbest)
     return remaining_current_injuries
         
 def retry_request(url):
@@ -112,7 +125,7 @@ def scrape_donbest_injuries(league, data_dir, save_html, save_db, old_html_filen
         # find table, class=statistics_table
         tables = soup.find_all("table", class_="statistics_table")
         if len(tables) != 1:
-            print("No injuries found or too many donbest data tables error.")
+            print("No injuries found or too many donbest data tables error.", league)
         else:
             trs = tables[0].find_all("tr")
 
