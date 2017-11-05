@@ -61,7 +61,17 @@ def upsert_injury(current_injuries, injury):
                                                     is_red = db_donbest.is_red, \
                                                     status = db_donbest.status).all()
         if len(duplicates) > 0:
-            print("ERROR: duplicate found for", db_donbest.league, db_donbest.date, db_donbest.team_name, db_donbest.player_name, db_donbest.position, db_donbest.injury, db_donbest.is_red, db_donbest.status, db_donbest.created_at)
+            print("Duplicate found for", db_donbest.league, db_donbest.date, db_donbest.team_name, db_donbest.player_name, db_donbest.position, db_donbest.injury, db_donbest.is_red, db_donbest.status, db_donbest.created_at)
+            # if we search all duplicates and any of them has a null removed_at, don't add
+            add_back = True
+            for duplicate in duplicates:
+                print(duplicate.removed_at, type(duplicate.removed_at))
+                if duplicate.removed_at is None:
+                    add_back = False
+                    print("dont add back previously removed injury")
+            if add_back:
+                print("adding back previously removed injury")
+                session.add(db_donbest)
         else:
             session.add(db_donbest)
     return remaining_current_injuries
