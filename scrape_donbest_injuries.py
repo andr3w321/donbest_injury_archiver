@@ -102,7 +102,7 @@ def scrape_donbest_injuries(league, data_dir, save_html, save_db, old_html_filen
 
     # retrieve data
     if old_html_filename is None:
-        url = "http://www.donbest.com/{}/injuries/".format(donbest_league)
+        url = "https://iis2.donbest.com/{}/injuries/".format(donbest_league)
         res = retry_request(url)
         data = res.text
         now = datetime.datetime.utcnow().replace(tzinfo=pytz.UTC)
